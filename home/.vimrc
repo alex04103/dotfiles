@@ -66,7 +66,7 @@ set completeopt=longest,menuone
 " change enter key to insert completion:
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " escape to exit completion
-inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+"inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
 " up/down arrow to select
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
