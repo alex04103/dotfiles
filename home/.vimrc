@@ -58,6 +58,8 @@ set ignorecase
 set smartcase
 set incsearch
 
+set mouse=a
+
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-x><C-o>
 " enable smart autocomplete (uses ctags!)
