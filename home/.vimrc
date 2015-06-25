@@ -1,4 +1,3 @@
-
 set nocompatible
 
 " required by vundle
@@ -26,6 +25,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'ntpeters/vim-better-whitespace'
 Bundle 'tpope/vim-surround'
+Bundle 'tomtom/tcomment_vim'
 Bundle 'editorconfig/editorconfig-vim'
 
 " language plugins
@@ -45,9 +45,8 @@ set t_Co=256
 colorscheme mustang
 "set background=dark
 "colorscheme solarized
-
+let mapleader=","
 "set rtp+=~/.local/lib64/python3.3/site-packages/powerline/bindings/vim
-
 
 " syntax
 syntax enable
@@ -57,11 +56,19 @@ filetype plugin indent on
 set ignorecase
 set smartcase
 set incsearch
+set hlsearch
+set showmatch
+set wildmode=list
 
 set mouse=a
 
-inoremap <C-Space> <C-x><C-o>
-inoremap <C-@> <C-x><C-o>
+vmap <C-C> "+y
+map <C-V> "+p
+imap <C-V> <F10><C-r>+<F10>
+set pastetoggle=<F10>
+
+"imap <leader><tab> <C-x><C-o>
+imap <C-Space> <C-x><C-o>
 " enable smart autocomplete (uses ctags!)
 set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
@@ -76,7 +83,23 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-map :nt :NERDTree
+let NERDTreeShowHidden=1
+nnoremap <F2> :NERDTreeToggle<CR>
+" toggle line numbers and git gutter
+noremap <F12> :set invnumber<CR>:GitGutterSignsToggle<CR>
+
+map <leader>rc :w<CR>:source $MYVIMRC<CR>:noh<CR>
+map <leader>s :w<CR>
+noremap <C-T> :tabedit<CR>
+noremap <C-Q> :tabclose<CR>
+noremap <C-W> :close<CR>
+
+" Switch tabs
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+
+"Faster shortcut for commenting. Requires T-Comment plugin
+map <A>c <c-_><c-_>
 
 " C-p
 let g:ctrlp_map = '<c-p>'
@@ -90,8 +113,8 @@ let g:ctrlp_custom_ignore = {
 "  \ 'link': 'some_bad_symbolic_links',
 
 " ----- scrooloose/syntastic settings -----
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = "▲"
+"let g:syntastic_error_symbol = '✘'
+"let g:syntastic_warning_symbol = "▲"
 "augroup mySyntastic
 "  au!
 "  au FileType tex let b:syntastic_mode = "passive"
@@ -120,18 +143,11 @@ hi clear SignColumn
 " In vim-airline, only display "hunks" if the diff is non-zero
 let g:airline#extensions#hunks#non_zero_only = 1
 
-
 " line numbers
 set number
-
-" my mappings
-let mapleader = ","
-nnoremap <leader>rce :edit $MYVIMRC<cr>
-nnoremap <leader>rcs :source $MYVIMRC<cr>
-nnoremap <leader><TAB> <C-w>w
-nnoremap <leader>nt :NERDTreeToggle<cr>
-" iabbrev bla blafasel
-
+set tabstop=4
+set showcmd
+set nowrap
 
 "let g:neocomplcache_enable_at_startup = 1
 "let g:neocomplcache_enable_smart_case = 1
