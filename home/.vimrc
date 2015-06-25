@@ -99,7 +99,7 @@ nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 
 "Faster shortcut for commenting. Requires T-Comment plugin
-map <A>c <c-_><c-_>
+map <leader>c <c-_><c-_>
 
 " C-p
 let g:ctrlp_map = '<c-p>'

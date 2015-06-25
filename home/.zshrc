@@ -35,4 +35,4 @@ alias ntpdate='ntpdate de.pool.ntp.org'
 alias ls-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
 
 export PATH="$PATH:$HOME/bin"
-
+export EDITOR=/usr/bin/vim
