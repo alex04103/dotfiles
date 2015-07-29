@@ -6,7 +6,5 @@
 	f = fetch
 	a = add
 	b = branch
-	co = checkout
-	cb = checkout -b
 	d = diff
 	l = log --oneline --graph --decorate --all

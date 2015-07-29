@@ -49,7 +49,7 @@ let mapleader=","
 "set rtp+=~/.local/lib64/python3.3/site-packages/powerline/bindings/vim
 
 " syntax
-syntax enable
+syntax on
 filetype plugin indent on
 
 " search
@@ -58,7 +58,8 @@ set smartcase
 set incsearch
 set hlsearch
 set showmatch
-set wildmode=list
+set wildmenu
+set wildmode=list:longest,full
 
 set mouse=a
 
@@ -67,11 +68,11 @@ map <C-V> "+p
 imap <C-V> <F10><C-r>+<F10>
 set pastetoggle=<F10>
 
-"imap <leader><tab> <C-x><C-o>
-imap <C-Space> <C-x><C-o>
+inoremap <C-Space> <C-x><C-o>
 " enable smart autocomplete (uses ctags!)
 set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
+
 " change enter key to insert completion:
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " escape to exit completion
@@ -84,7 +85,7 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 let NERDTreeShowHidden=1
-nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <F6> :NERDTreeToggle<CR>
 " toggle line numbers and git gutter
 noremap <F12> :set invnumber<CR>:GitGutterSignsToggle<CR>
 
@@ -143,11 +144,11 @@ hi clear SignColumn
 " In vim-airline, only display "hunks" if the diff is non-zero
 let g:airline#extensions#hunks#non_zero_only = 1
 
-" line numbers
 set number
 set tabstop=4
 set showcmd
 set nowrap
+noh
 
 "let g:neocomplcache_enable_at_startup = 1
 "let g:neocomplcache_enable_smart_case = 1
