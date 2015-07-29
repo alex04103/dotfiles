@@ -13,8 +13,8 @@ antigen bundle git
 antigen bundle mosh
 antigen bundle tmux
 #antigen bundle tmuxinator
-#antigen bundle node
-#antigen bundle npm
+antigen bundle node
+antigen bundle npm
 #antigen bundle rsync
 antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen bundle zsh-users/zsh-completions src
@@ -22,7 +22,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme tjkirch_mod
 antigen apply
 
-autoload -U compinit && compinit
+autoload -U compinit && compinit -u
 
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
