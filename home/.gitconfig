@@ -1,6 +1,6 @@
-[user]
-	name = Compilenix
-	email = Compilenix@compilenix.org
+#[user]
+#	name = Compilenix
+#	email = Compilenix@compilenix.org
 [alias]
 	s = status
 	f = fetch
