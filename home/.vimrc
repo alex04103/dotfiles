@@ -45,7 +45,7 @@ set t_Co=256
 colorscheme mustang
 "set background=dark
 "colorscheme solarized
-let mapleader=","
+let mapleader = "\<SPACE>"
 "set rtp+=~/.local/lib64/python3.3/site-packages/powerline/bindings/vim
 
 " syntax
@@ -90,6 +90,7 @@ nnoremap <F6> :NERDTreeToggle<CR>
 noremap <F12> :set invnumber<CR>:GitGutterSignsToggle<CR>
 
 map <leader>rc :w<CR>:source $MYVIMRC<CR>:noh<CR>
+nnoremap <Leader>w :w<CR>
 map <leader>s :w<CR>
 noremap <C-T> :tabedit<CR>
 noremap <C-Q> :tabclose<CR>
@@ -134,7 +135,7 @@ let g:easytags_suppress_ctags_warning = 1
 
 " ----- majutsushi/tagbar settings -----
 " Open/close tagbar with \b
-nmap <silent> <leader>b :TagbarToggle<CR>
+nmap <silent> <leader>r :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 "autocmd BufEnter * nested :call tagbar#autoopen(0)
 

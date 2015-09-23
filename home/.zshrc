@@ -1,3 +1,14 @@
+# save emacs!
+if [[ "$TERM" == "dumb" ]]
+then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  unfunction precmd
+  unfunction preexec
+  PS1='$ '
+fi
+
 # homes(h)ick dotfile management
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
@@ -16,6 +27,8 @@ antigen bundle tmux
 antigen bundle node
 antigen bundle npm
 #antigen bundle rsync
+antigen bundle systemd
+antigen bundle nmap
 antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen bundle zsh-users/zsh-completions src
 antigen bundle fcambus/ansiweather
@@ -54,4 +67,3 @@ unsetopt share_history
 if [ -f "$HOME/.zshrc_include" ]; then
 	source "$HOME/.zshrc_include"
 fi
-

@@ -23,6 +23,7 @@ optional:
  - jq is installed (simple browser for "2ch-style" web forum sites)
 
 ```sh
+mkdir -pv $HOME/bin
 git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
 $HOME/.homesick/repos/homeshick/bin/homeshick clone compilenix/dotfiles
 touch $HOME/.tmux.conf_include
