@@ -10,3 +10,6 @@
 	l = log --oneline --graph --decorate --all
 [push]
 	default = matching
+[include]
+	path = ~/.gitconfig_include
+

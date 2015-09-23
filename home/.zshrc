@@ -18,8 +18,8 @@ antigen bundle npm
 #antigen bundle rsync
 antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen bundle zsh-users/zsh-completions src
-#antigen bundle fcambus/ansiweather
-antigen theme tjkirch_mod
+antigen bundle fcambus/ansiweather
+antigen theme dpoggi
 antigen apply
 
 autoload -U compinit && compinit -u
@@ -34,12 +34,24 @@ alias ls='ls -h --color'
 alias ll='ls -lh --color'
 alias la='ls -alh --color'
 alias grep='grep --color'
-alias ntpdate='ntpdate de.pool.ntp.org'
 alias ls-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
-alias datet='date +%s | xargs printf "%x\n"'
+alias hexdate='date +%s | xargs printf "%x\n"'
 alias htop='htop -d 10'
+alias fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(/usr/games/fortune)\n$(tput sgr0)"'
 
 export PATH="$PATH:$HOME/bin"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
+export HISTSIZE=2000
+export HISTFILE="$HOME/.history"
+export SAVEHIST=$HISTSIZE
+
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt extendedglob
+unsetopt share_history
+
+if [ -f "$HOME/.zshrc_include" ]; then
+	source "$HOME/.zshrc_include"
+fi
 

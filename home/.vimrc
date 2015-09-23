@@ -227,3 +227,8 @@ set noshowmode
 "nnoremap <Down> <Nop>
 
 autocmd vimenter * if !argc() | NERDTree | endif
+
+if filereadable(glob("~/.vimrc_include"))
+    source ~/.vimrc_include
+endif
+
