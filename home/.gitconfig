@@ -3,11 +3,13 @@
 #	email = Compilenix@compilenix.org
 [alias]
 	s = status
+	cnf = config -l
 	f = fetch
 	a = add
 	b = branch
 	d = diff
 	l = log --oneline --graph --decorate --all
+	la = log --graph --decorate --all
 [push]
 	default = matching
 [include]

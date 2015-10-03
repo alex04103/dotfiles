@@ -1,3 +1,6 @@
+unicode_start
+kbd_mode # check keyboard mode, should be Unicode (UTF-8)
+
 # save emacs!
 if [[ "$TERM" == "dumb" ]]
 then
@@ -67,3 +70,4 @@ unsetopt share_history
 if [ -f "$HOME/.zshrc_include" ]; then
 	source "$HOME/.zshrc_include"
 fi
+
