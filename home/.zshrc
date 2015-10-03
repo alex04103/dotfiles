@@ -1,4 +1,5 @@
 unicode_start
+kbd_mode -u # set unicode mode
 kbd_mode # check keyboard mode, should be Unicode (UTF-8)
 
 # save emacs!
