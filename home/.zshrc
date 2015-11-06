@@ -35,6 +35,7 @@ antigen bundle systemd
 antigen bundle nmap
 antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen bundle zsh-users/zsh-completions src
+antigen bundle thewtex/tmux-mem-cpu-load
 antigen bundle fcambus/ansiweather
 antigen theme dpoggi
 antigen apply
@@ -53,8 +54,7 @@ alias la='ls -alh --color'
 alias grep='grep --color'
 alias ls-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
 alias hexdate='date +%s | xargs printf "%x\n"'
-alias htop='htop -d 10'
-alias fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(/usr/games/fortune)\n$(tput sgr0)"'
+alias fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 
 export PATH="$PATH:$HOME/bin"
 export EDITOR=vim
@@ -67,6 +67,10 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 setopt extendedglob
 unsetopt share_history
+
+if [ ! -f "$HOME/.tmux.conf_include" ]; then
+	touch "$HOME/.tmux.conf_include"
+fi
 
 if [ -f "$HOME/.zshrc_include" ]; then
 	source "$HOME/.zshrc_include"

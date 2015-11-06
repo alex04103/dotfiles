@@ -61,7 +61,7 @@ set showmatch
 set wildmenu
 set wildmode=list:longest,full
 
-set mouse=a
+set mouse=n
 
 vmap <C-C> "+y
 map <C-V> "+p
