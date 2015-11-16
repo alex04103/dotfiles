@@ -94,7 +94,6 @@ nnoremap <Leader>w :w<CR>
 map <leader>s :w<CR>
 noremap <C-T> :tabedit<CR>
 noremap <C-Q> :tabclose<CR>
-noremap <C-W> :close<CR>
 
 " Switch tabs
 nnoremap <C-Left> :tabprevious<CR>
