@@ -55,6 +55,8 @@ alias grep='grep --color'
 alias ls-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
 alias hexdate='date +%s | xargs printf "%x\n"'
 alias fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
+function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd ~; done; };
+alias fix-antigen_and_homesick='git-reset $HOME/.antigen/repos/*; git-reset $HOME/.homesick/repos/*; antigen-update; homeshick pull; homeshick refresh'
 
 export PATH="$PATH:$HOME/bin"
 export EDITOR=vim
