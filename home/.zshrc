@@ -21,22 +21,29 @@ if [ -f /usr/lib64/node_modules/npm/lib/utils/completion.sh ]; then
 	source /usr/lib64/node_modules/npm/lib/utils/completion.sh
 fi
 
-# antigen zsh plugin management
 source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
+antigen bundle gpg-agent
+antigen bundle ssh-agent
 antigen bundle git
 antigen bundle mosh
 antigen bundle tmux
-#antigen bundle tmuxinator
+antigen bundle tmuxinator
 antigen bundle node
 antigen bundle npm
-#antigen bundle rsync
+antigen bundle rsync
 antigen bundle systemd
-antigen bundle nmap
+#antigen bundle nmap
 antigen bundle zsh-users/zsh-syntax-highlighting
-#antigen bundle zsh-users/zsh-completions src
-#antigen bundle thewtex/tmux-mem-cpu-load
-antigen bundle fcambus/ansiweather
+antigen bundle zsh-users/zsh-completions
+if [ -f $(which sudo) ]; then
+#	antigen bundle thewtex/tmux-mem-cpu-load
+	antigen bundle compilenix/tmux-mem-cpu-load
+fi
+antigen bundle ascii-soup/zsh-url-highlighter
+antigen bundle psprint/zsnapshot
+antigen bundle akoenig/npm-run.plugin.zsh
+antigen bundle RobSis/zsh-completion-generator
 antigen theme dpoggi
 antigen apply
 
@@ -48,11 +55,13 @@ bindkey '^[[4~' end-of-line
 # aliases
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
+alias rm='rm -I'
 alias ls='ls -h --color'
 alias ll='ls -lh --color'
 alias la='ls -alh --color'
 alias grep='grep --color'
 alias ls-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
+alias ls-mem-dirty-loop='while true; do cat /proc/meminfo | grep Dirty; sleep .25; done'
 alias hexdate='date +%s | xargs printf "%x\n"'
 alias fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
 function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd ~; done; };
