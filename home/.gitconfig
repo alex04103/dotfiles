@@ -2,16 +2,23 @@
 #	name = Compilenix
 #	email = Compilenix@compilenix.org
 [alias]
-	s = status
-	cnf = config -l
-	f = fetch
-	a = add
-	b = branch
-	d = diff
-	l = log --oneline --graph --decorate --all
-	la = log --graph --decorate --all
+    s = status
+    c = config
+    cl = config -l
+    ce = config -e
+    f = fetch
+    a = add
+    aa = add -A
+    b = branch
+    d = diff
+    dr = diff origin/master
+    l = log --oneline --graph --decorate --all
+    la = log --graph --decorate --all
 [push]
-	default = matching
+    default = matching
+#[core]
+#    fileMode = false
 [include]
-	path = ~/.gitconfig_include
+    path = ~/.gitconfig_include
 
+# vim: sw=4 et

@@ -38,17 +38,13 @@ Bundle 'c9s/perlomni.vim'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'kovisoft/slimv'
 
-" themes
 Bundle 'altercation/vim-colors-solarized'
-" colors
+
 set t_Co=256
 colorscheme mustang
 "set background=dark
-"colorscheme solarized
 let mapleader = "\<SPACE>"
-"set rtp+=~/.local/lib64/python3.3/site-packages/powerline/bindings/vim
 
-" syntax
 syntax on
 filetype plugin indent on
 
@@ -61,15 +57,25 @@ set showmatch
 set wildmenu
 set wildmode=list:longest,full
 
-set mouse=n
+set mouse=a
 
-vmap <C-C> "+y
+" appand here
+map <F4> a vim: sw=4 et
+map <F6> :NERDTreeToggle<CR>
+" reformat file
+map <F7> mzgg=G`z
+" disable search result highlight
+map <F8> :noh<CR>
+set pastetoggle=<F10>
+map <F12> :set invnumber<CR>:GitGutterSignsToggle<CR>
+
+inoremap <S-TAB> <C-D>
+
+map <C-C> "+y
 map <C-V> "+p
 imap <C-V> <F10><C-r>+<F10>
-set pastetoggle=<F10>
 
-inoremap <C-Space> <C-x><C-o>
-" enable smart autocomplete (uses ctags!)
+map <C-Space> <C-x><C-o>
 set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone
 
@@ -85,19 +91,12 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 let NERDTreeShowHidden=1
-nnoremap <F6> :NERDTreeToggle<CR>
-" toggle line numbers and git gutter
-noremap <F12> :set invnumber<CR>:GitGutterSignsToggle<CR>
 
 map <leader>rc :w<CR>:source $MYVIMRC<CR>:noh<CR>
 nnoremap <Leader>w :w<CR>
 map <leader>s :w<CR>
 noremap <C-T> :tabedit<CR>
 noremap <C-Q> :tabclose<CR>
-
-" Switch tabs
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
 
 "Faster shortcut for commenting. Requires T-Comment plugin
 map <leader>c <c-_><c-_>
@@ -107,19 +106,11 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ }
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'file': '\v\.(exe|so|dll)$',
+            \ }
 " example link to exclude
 "  \ 'link': 'some_bad_symbolic_links',
-
-" ----- scrooloose/syntastic settings -----
-"let g:syntastic_error_symbol = '✘'
-"let g:syntastic_warning_symbol = "▲"
-"augroup mySyntastic
-"  au!
-"  au FileType tex let b:syntastic_mode = "passive"
-"augroup END
 
 " ----- xolox/vim-easytags settings -----
 " Where to look for tags files
@@ -148,83 +139,13 @@ set number
 set tabstop=4
 set showcmd
 set nowrap
+set modeline
+set modelines=5
 noh
 
-"let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_enable_smart_case = 1
-"let g:neocomplcache_min_syntax_length = 3
-"let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-"if !exists('g:neocomplcache_keyword_patterns')
-"	let g:neocomplcache_keyword_patterns = {}
-"endif
-"let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-"inoremap <expr><C-g>     neocomplcache#undo_completion()
-"inoremap <expr><C-l>     neocomplcache#complete_common_string()
-"
-"" Recommended key-mappings.
-"" <CR>: close popup and save indent.
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"function! s:my_cr_function()
-"	return neocomplcache#smart_close_popup() . "\<CR>"
-"" For no inserting <CR> key.
-""	return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-"endfunction
-""       " <TAB>: completion.
-"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-""       " <C-h>, <BS>: close popup and delete backword char.
-"noremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-"noremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-"noremap <expr><C-y>  neocomplcache#close_popup()
-"noremap <expr><C-e>  neocomplcache#cancel_popup()
-"" Enable omni completion.
-"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-"" Enable heavy omni completion.
-"if !exists('g:neocomplcache_omni_patterns')
-"	let g:neocomplcache_omni_patterns = {}
-"endif
-"let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-"let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-"
-"" neosnippet
-"" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"" xmap <C-k>     <Plug>(neosnippet_expand_target)
-"imap <expr><CR> neosnippet#expandable() ?
-"			\ "\<Plug>(neosnippet_expand)"
-"			\: "\<CR>"
-"
-"
-"imap <expr><TAB> neosnippet#jumpable() ?
-"			\ "\<Plug>(neosnippet_jump)"
-"			\: pumvisible() ? "\<C-n>" : "\<TAB>"
-"smap <expr><TAB> neosnippet#jumpable() ?
-"			\ "\<Plug>(neosnippet_jump)"
-"			\: "\<TAB>"
-"
 " airline all the time
 set laststatus=2
 set noshowmode
-
-" hardcore mode without arrows keys
-" basically learned to live without, might conflict with other stuff
-"inoremap <Left> <Nop>
-"inoremap <Right> <Nop>
-"inoremap <Up> <Nop>
-"inoremap <Down> <Nop>
-"vnoremap <Left> <Nop>
-"vnoremap <Right> <Nop>
-"vnoremap <Up> <Nop>
-"vnoremap <Down> <Nop>
-"nnoremap <Left> <Nop>
-"nnoremap <Right> <Nop>
-"nnoremap <Up> <Nop>
-"nnoremap <Down> <Nop>
 
 autocmd vimenter * if !argc() | NERDTree | endif
 
@@ -232,3 +153,4 @@ if filereadable(glob("~/.vimrc_include"))
     source ~/.vimrc_include
 endif
 
+" vim: sw=4 et

@@ -14,18 +14,25 @@ configs for:
  - tmux
  - git (1.7.10+)
  - htop
- - fonts
+ - ansiweather
+ - Xresources (xterm)
+ - irssi
 
-assumes:
- - python 3.3 is default
+assumes installed software:
+ - python 3.3+
+ - git
+ - zsh
+ - vim
+ - sudo (optional)
+ - htop (optional)
 
 ```sh
 mkdir -pv $HOME/bin
 git clone https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-$HOME/.homesick/repos/homeshick/bin/homeshick clone compilenix/dotfiles
+echo "y" | $HOME/.homesick/repos/homeshick/bin/homeshick clone compilenix/dotfiles
 
 chsh -s /bin/zsh
-vim +PluginInstall +qall
+vim +PluginInstall +qa
 exec zsh
 ```
 

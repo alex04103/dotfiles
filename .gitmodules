@@ -1,6 +1,8 @@
 [submodule "home/.vim/bundle/vundle"]
-	path = home/.vim/bundle/vundle
-	url = https://github.com/gmarik/vundle.git
+    path = home/.vim/bundle/vundle
+    url = https://github.com/gmarik/vundle.git
 [submodule "home/.antigen"]
-	path = home/.antigen
-	url = https://github.com/zsh-users/antigen
+    path = home/.antigen
+    url = https://github.com/zsh-users/antigen
+
+# vim: sw=4 et
