@@ -38,7 +38,7 @@ antigen bundle npm
 antigen bundle rsync
 antigen bundle systemd
 
-$(which sudo make cmake) > /dev/null
+$(which sudo make cmake) 2> /dev/null
 if [ $? -eq 0 ]; then
     antigen bundle thewtex/tmux-mem-cpu-load
     #antigen bundle compilenix/tmux-mem-cpu-load
