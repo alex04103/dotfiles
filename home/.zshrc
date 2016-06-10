@@ -1,4 +1,5 @@
 n=$(nice)
+# increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
 if [[ $EUID -eq 0 ]]; then
     renice -n -20 $$ >/dev/null
 fi
@@ -17,49 +18,6 @@ then
     unfunction precmd
     unfunction preexec
     PS1='$ '
-fi
-
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
-
-if [ -f /usr/lib64/node_modules/npm/lib/utils/completion.sh ]; then
-    source /usr/lib64/node_modules/npm/lib/utils/completion.sh
-fi
-
-source $HOME/.antigen/antigen.zsh
-antigen use oh-my-zsh
-
-antigen bundle gpg-agent
-antigen bundle git
-antigen bundle mosh
-antigen bundle tmux
-antigen bundle tmuxinator
-antigen bundle node
-antigen bundle npm
-antigen bundle rsync
-antigen bundle systemd
-
-if [[ $EUID -eq 0 && -f $(which sudo) && -f $(which make) && -f $(which cmake) ]]; then
-    antigen bundle thewtex/tmux-mem-cpu-load
-    #antigen bundle compilenix/tmux-mem-cpu-load
-fi
-
-antigen bundle RobSis/zsh-completion-generator
-antigen bundle zsh-users/zsh-completions
-antigen bundle ascii-soup/zsh-url-highlighter
-antigen bundle psprint/zsnapshot
-antigen bundle akoenig/npm-run.plugin.zsh
-
-antigen theme dpoggi
-antigen apply
-
-autoload -U compinit && compinit -u
-
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-if [ ! -z "$TMUX" ]; then
-    antigen bundle zsh-users/zsh-autosuggestions
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
 fi
 
 bindkey '^[[1~' beginning-of-line
@@ -127,6 +85,56 @@ fi
 
 if [ ! -f "$HOME/.gitconfig_include" ]; then
     echo -e "#[user]\n#\tname = Compilenix\n#\temail = Compilenix@compilenix.org\n#[core]\n#\tfileMode = false\n\n# vim: sw=4 et" > "$HOME/.gitconfig_include"
+fi
+
+source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+fpath=($HOME/.homesick/repos/homeshick/completions $fpath)
+
+if [ -f /usr/lib64/node_modules/npm/lib/utils/completion.sh ]; then
+    source /usr/lib64/node_modules/npm/lib/utils/completion.sh
+fi
+
+source $HOME/.antigen/antigen.zsh
+antigen use oh-my-zsh
+
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt extendedglob
+unsetopt share_history
+
+antigen theme dpoggi
+echo "breakpoint: hit Control+C if the system takes to long to initialize optional shell modules. (you can rerun this with: \"exec zsh\")"
+
+antigen bundle gpg-agent
+antigen bundle git
+antigen bundle mosh
+antigen bundle tmux
+antigen bundle tmuxinator
+antigen bundle node
+antigen bundle npm
+antigen bundle rsync
+antigen bundle systemd
+
+if [[ $EUID -eq 0 && -f $(which sudo) && -f $(which make) && -f $(which cmake) ]]; then
+    antigen bundle thewtex/tmux-mem-cpu-load
+    #antigen bundle compilenix/tmux-mem-cpu-load
+fi
+
+antigen bundle RobSis/zsh-completion-generator
+antigen bundle zsh-users/zsh-completions
+antigen bundle ascii-soup/zsh-url-highlighter
+antigen bundle psprint/zsnapshot
+antigen bundle akoenig/npm-run.plugin.zsh
+
+antigen apply
+
+autoload -U compinit && compinit -u
+
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+if [ ! -z "$TMUX" ]; then
+    antigen bundle zsh-users/zsh-autosuggestions
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=11" # yellow
 fi
 
 if [ -f "$HOME/.zshrc_include" ]; then
