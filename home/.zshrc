@@ -97,18 +97,12 @@ fi
 source $HOME/.antigen/antigen.zsh
 antigen use oh-my-zsh
 
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-setopt extendedglob
-unsetopt share_history
-
 antigen theme dpoggi
 echo "breakpoint: hit Control+C if the system takes to long to initialize optional shell modules. (you can rerun this with: \"exec zsh\")"
 
 antigen bundle gpg-agent
 antigen bundle git
 antigen bundle mosh
-antigen bundle tmux
 antigen bundle tmuxinator
 antigen bundle node
 antigen bundle npm
