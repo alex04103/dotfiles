@@ -65,7 +65,7 @@ alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerg
 alias update-archlinux='pacman -Syu'
 alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-get update; }; ask_yn_n_callback() { echo ""; }; ask_yn; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk '"'"'{print $1}'"'"' | c )\n"; done; echo; apt-get upgrade'
 function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd ~; done; };
-alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; exec zsh'
+alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; exec zsh'
 
 export PATH="$PATH:$HOME/bin:$HOME/sh"
 export EDITOR=vim
@@ -110,8 +110,8 @@ antigen bundle rsync
 antigen bundle systemd
 
 if [[ $EUID -eq 0 && -f $(which sudo) && -f $(which make) && -f $(which cmake) ]]; then
-    antigen bundle thewtex/tmux-mem-cpu-load
-    #antigen bundle compilenix/tmux-mem-cpu-load
+    #antigen bundle thewtex/tmux-mem-cpu-load
+    antigen bundle compilenix/tmux-mem-cpu-load
 fi
 
 antigen bundle RobSis/zsh-completion-generator
