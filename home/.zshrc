@@ -7,7 +7,7 @@ fi
 stty -ixon -ixoff 2>/dev/null
 unicode_start 2>/dev/null
 kbd_mode -u 2>/dev/null # set unicode mode
-kbd_mode # check keyboard mode, should be Unicode (UTF-8)
+kbd_mode 2>/dev/null # check keyboard mode, should be Unicode (UTF-8)
 
 # save emacs!
 if [[ "$TERM" == "dumb" ]]
@@ -24,7 +24,7 @@ bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 
 unalias tmux 2>/dev/null
-if [ -f $(which tmux) ]; then
+if [ -f $(which tmux 2>/dev/null) ]; then
     if [ ! -f "$HOME/.tmux.conf_configured" ]; then
         if [[ $(tmux -V) == *"1."* ]]; then
             unlink "$HOME/.tmux.conf"
@@ -46,7 +46,8 @@ alias ls='ls -h --color'
 alias ll='ls -lh --color'
 alias la='ls -alh --color'
 alias grep='grep --color'
-alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done;'
+alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
+alias ceph-osd-heap-release='ceph tell "osd.*" heap release'
 alias get-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
 alias get-mem-dirty='cat /proc/meminfo | grep Dirty'
 alias get-mem-dirty-loop='while true; do get-mem-dirty; sleep 1; done'
@@ -63,7 +64,7 @@ alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
 alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; emerge -avDuN world'
 alias update-archlinux='pacman -Syu'
-alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-get update; }; ask_yn_n_callback() { echo ""; }; ask_yn; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk '"'"'{print $1}'"'"' | c )\n"; done; echo; apt-get upgrade'
+alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-get update; }; ask_yn_n_callback() { echo ""; }; ask_yn; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; apt-get upgrade'
 function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd ~; done; };
 alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; exec zsh'
 
@@ -109,9 +110,17 @@ antigen bundle npm
 antigen bundle rsync
 antigen bundle systemd
 
-if [[ $EUID -eq 0 && -f $(which sudo) && -f $(which make) && -f $(which cmake) ]]; then
-    #antigen bundle thewtex/tmux-mem-cpu-load
-    antigen bundle compilenix/tmux-mem-cpu-load
+if [[ \
+    $EUID -eq 0 && \
+    -f $(which sudo 2>/dev/null) && \
+    -f $(which make 2>/dev/null) && \
+    -f $(which cmake 2>/dev/null) && \
+    -f $(which gcc 2>/dev/null) && \
+    -f $(which g++ 2>/dev/null) && \
+    -f $(which c++ 2>/dev/null) \
+    ]]; then
+#antigen bundle thewtex/tmux-mem-cpu-load
+antigen bundle compilenix/tmux-mem-cpu-load
 fi
 
 antigen bundle RobSis/zsh-completion-generator

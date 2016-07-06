@@ -18,6 +18,8 @@
     default = matching
 #[core]
 #    fileMode = false
+[oh-my-zsh]
+    hide-status = 1
 [include]
     path = ~/.gitconfig_include
 
