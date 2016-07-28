@@ -1,6 +1,0 @@
-location:Hamburg,DE
-fetch_cmd:curl -s
-geo_api_url:www.telize.com/geoip
-geo_api_proto:https
-units:metric
-daylight:true

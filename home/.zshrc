@@ -23,15 +23,16 @@ fi
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 
+# TODO: do the following for htop, too.
 unalias tmux 2>/dev/null
 if [ -f $(which tmux 2>/dev/null) ]; then
     if [ ! -f "$HOME/.tmux.conf_configured" ]; then
         if [[ $(tmux -V) == *"1."* ]]; then
-            unlink "$HOME/.tmux.conf"
+            unlink "$HOME/.tmux.conf" 2>/dev/null
             ln -s "$HOME/.homesick/repos/dotfiles/home/.tmux.conf_v1" "$HOME/.tmux.conf"
         fi
         if [[ $(tmux -V) == *"2."* ]]; then
-            unlink "$HOME/.tmux.conf"
+            unlink "$HOME/.tmux.conf" 2>/dev/null
             ln -s "$HOME/.homesick/repos/dotfiles/home/.tmux.conf_v2" "$HOME/.tmux.conf"
         fi
         touch "$HOME/.tmux.conf_configured"
@@ -39,6 +40,7 @@ if [ -f $(which tmux 2>/dev/null) ]; then
 fi
 
 # aliases
+alias brexit='echo "disable all network interfaces, delete 50% of all files"; exit'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
@@ -46,18 +48,34 @@ alias ls='ls -h --color'
 alias ll='ls -lh --color'
 alias la='ls -alh --color'
 alias grep='grep --color'
+alias make="make -j$(nproc)"
+alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release'
-alias get-network-listening="lsof -Pan -i tcp -i udp | grep LISTEN | grep -v 127"
+alias clean-swap='swapoff -a; swapon -a'
+alias get-network-listening="lsof -Pan -i tcp -i udp | grep -i LISTEN"
 alias get-mem-dirty='cat /proc/meminfo | grep Dirty'
 alias get-mem-dirty-loop='while true; do get-mem-dirty; sleep 1; done'
 alias get-mem-dirty-loop-250='while true; do get-mem-dirty; sleep 1; done'
 alias get-mem-dirty-loop-500='while true; do get-mem-dirty; sleep 1; done'
 alias get-ceph-status-loop='while true; do ceph -s > /tmp/get-ceph-status-loop.txt; clear; tput cup 0 0; cat /tmp/get-ceph-status-loop.txt; sleep 2; done'
 alias get-date='date +%s'
+alias get-date-from-unixtime='read a; date -d @$a'
 alias get-date-hex='get-date | xargs printf "%x\n"'
+alias get-date-from-hex-unixtime='read a; echo $a | echo $((16#$_))'
+alias get-date-from-hex='get-date-from-hex-unixtime | date -d @$_'
+alias get-dig-short-answer='dig +noall +answer'
+alias get-picture-metadata-curl='read a; curl -sr 0-1024 $a | strings'
+alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
+alias get-weather='curl wttr.in'
+alias get-weather-in='echo -n "enter location (name or 3-letters airport code): "; read a; curl wttr.in/$a'
+alias get-moon-phase='curl wttr.in/Moon'
+alias get-mysql-selects='ngrep -d eth0 -i "select" port 3306'
+alias get-mysql-updates='ngrep -d eth0 -i "update" port 3306'
+alias get-mysql-inserts='ngrep -d eth0 -i "insert" port 3306'
 alias get-fortune='echo -e "\n$(tput bold)$(tput setaf $(shuf -i 1-5 -n 1))$(fortune)\n$(tput sgr0)"'
-function get-debian-package-description { read input;dpkg -l ${input} | grep " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//';unset input; };
+alias get-process-zombie="ps aux | awk '{if (\$8==\"Z\") { print \$2 }}'"
+function get-debian-package-description { read input; dpkg -l ${input} | grep --color " ${input} " | awk '{$1=$2=$3=$4="";print $0}' | sed 's/^ *//' };
 function get-debian-package-updates { apt-get --just-print upgrade 2>&1 | perl -ne 'if (/Inst\s([\w,\-,\d,\.,~,:,\+]+)\s\[([\w,\-,\d,\.,~,:,\+]+)\]\s\(([\w,\-,\d,\.,~,:,\+]+)\)? /i) {print "$1 (\e[1;34m$2\e[0m -> \e[1;32m$3\e[0m)\n"}'; };
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
@@ -71,7 +89,7 @@ alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/lo
 export PATH="$PATH:$HOME/bin:$HOME/sh"
 export EDITOR=vim
 export LANG="en_US.UTF-8"
-export HISTSIZE=10000
+export HISTSIZE=100000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
 
