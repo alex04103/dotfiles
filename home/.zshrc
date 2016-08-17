@@ -39,8 +39,28 @@ if [ -f $(which tmux 2>/dev/null) ]; then
     fi
 fi
 
+unalias sudo 2>/dev/null
+unalias make 2>/dev/null
+unalias cmake 2>/dev/null
+unalias gcc 2>/dev/null
+unalias g++ 2>/dev/null
+unalias c++ 2>/dev/null
+condition_for_tmux_mem_cpu_load=1
+if [[ \
+    $EUID -eq 0 && \
+    -f $(which sudo 2>/dev/null) && \
+    -f $(which make 2>/dev/null) && \
+    -f $(which cmake 2>/dev/null) && \
+    -f $(which gcc 2>/dev/null) && \
+    -f $(which g++ 2>/dev/null) && \
+    -f $(which c++ 2>/dev/null) \
+    ]]; then
+
+    condition_for_tmux_mem_cpu_load=0
+fi
+
+
 # aliases
-alias brexit='echo "disable all network interfaces, delete 50% of all files"; exit'
 alias tmux='tmux -2 -u'
 alias tmuxa='tmux list-sessions 2>/dev/null 1>&2 && tmux a || tmux'
 alias tmux-detach='tmux detach'
@@ -51,8 +71,11 @@ alias grep='grep --color'
 alias make="make -j$(nproc)"
 alias rsync="rsync -v --progress --numeric-ids --human-readable --stats --copy-links --hard-links"
 alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; break;; No) ask_yn_n_callback; break;; esac; done'
-alias ceph-osd-heap-release='ceph tell "osd.*" heap release'
+alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
+alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias clean-swap='swapoff -a; swapon -a'
+alias dns-retransfer-zones='rndc retransfer'
+alias dns-reload-zones='rndc reload'
 alias get-network-listening="lsof -Pan -i tcp -i udp | grep -i LISTEN"
 alias get-mem-dirty='cat /proc/meminfo | grep Dirty'
 alias get-mem-dirty-loop='while true; do get-mem-dirty; sleep 1; done'
@@ -64,6 +87,7 @@ alias get-date-from-unixtime='read a; date -d @$a'
 alias get-date-hex='get-date | xargs printf "%x\n"'
 alias get-date-from-hex-unixtime='read a; echo $a | echo $((16#$_))'
 alias get-date-from-hex='get-date-from-hex-unixtime | date -d @$_'
+alias get-hpkp-pin='openssl x509 -pubkey -noout | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -binary | openssl enc -base64'
 alias get-dig-short-answer='dig +noall +answer'
 alias get-picture-metadata-curl='read a; curl -sr 0-1024 $a | strings'
 alias get-picture-metadata-file='read a; dd bs=1 count=1024 if=$a 2>/dev/null | strings'
@@ -80,8 +104,12 @@ function get-debian-package-updates { apt-get --just-print upgrade 2>&1 | perl -
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
+alias set-megaraid-alarm-enabled='megacli -AdpSetProp AlarmEnbl'
+alias set-megaraid-alarm-disabled='megacli -AdpSetProp AlarmDsbl'
+alias set-megaraid-alarm-silent='megacli -AdpSetProp AlarmSilence'
 alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; emerge -avDuN world'
-alias update-archlinux='pacman -Syu'
+alias update-archlinux-pacman='pacman -Syu'
+alias update-archlinux-yaourt='yaourt -Syu'
 alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-get update; }; ask_yn_n_callback() { echo ""; }; ask_yn; get-debian-package-updates | while read -r line; do echo -en "$line $(echo $line | awk "{print \$1}" | get-debian-package-description)\n"; done; echo; apt-get upgrade'
 function git-reset { for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd ~; done; };
 alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; exec zsh'
@@ -128,17 +156,9 @@ antigen bundle npm
 antigen bundle rsync
 antigen bundle systemd
 
-if [[ \
-    $EUID -eq 0 && \
-    -f $(which sudo 2>/dev/null) && \
-    -f $(which make 2>/dev/null) && \
-    -f $(which cmake 2>/dev/null) && \
-    -f $(which gcc 2>/dev/null) && \
-    -f $(which g++ 2>/dev/null) && \
-    -f $(which c++ 2>/dev/null) \
-    ]]; then
-#antigen bundle thewtex/tmux-mem-cpu-load
-antigen bundle compilenix/tmux-mem-cpu-load
+if [[ ${condition_for_tmux_mem_cpu_load} -eq 0 ]]; then
+    #antigen bundle thewtex/tmux-mem-cpu-load
+    antigen bundle compilenix/tmux-mem-cpu-load
 fi
 
 antigen bundle RobSis/zsh-completion-generator
