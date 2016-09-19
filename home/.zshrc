@@ -74,6 +74,7 @@ alias ask_yn='select yn in "Yes" "No"; do case $yn in Yes) ask_yn_y_callback; br
 alias brexit='echo "disable all network interfaces, delete 50% of all files and then reboot the dam thing!"; ask_yn_y_callback() { echo "See ya and peace out!"; exit; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
 alias ceph-osd-heap-release='ceph tell "osd.*" heap release' # release unused memory by the ceph osd daemon(s).
 alias clean-swap='swapoff -a; swapon -a'
+alias drop-fscache='sync; echo 3 > /proc/sys/vm/drop_caches'
 alias dns-retransfer-zones='rndc retransfer'
 alias dns-reload-zones='rndc reload'
 alias get-network-listening='netstat -tunpl'
