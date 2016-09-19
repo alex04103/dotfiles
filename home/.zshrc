@@ -2,7 +2,7 @@ n=$(nice)
 # increse process priotiy if user is root, this is useful if you're loggin in while the system is under high load
 if [[ $EUID -eq 0 ]]; then
     renice -n -20 $$ >/dev/null
-    ionice -c 2 -n 0 $$ >/dev/null
+    ionice -c 2 -n 0 -p $$ >/dev/null
 fi
 
 stty -ixon -ixoff 2>/dev/null
