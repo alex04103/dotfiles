@@ -152,7 +152,6 @@ antigen use oh-my-zsh
 antigen theme dpoggi
 echo "breakpoint: hit Control+C if the system takes to long to initialize optional shell modules. (you can rerun this with: \"exec zsh\")"
 
-antigen bundle gpg-agent
 antigen bundle git
 antigen bundle mosh
 antigen bundle tmuxinator
@@ -187,6 +186,11 @@ if [ -f "$HOME/.zshrc_include" ]; then
     source "$HOME/.zshrc_include"
 else
     touch "$HOME/.zshrc_include"
+fi
+
+if [ ! -f "$HOME/.gnupg/gpg-agent.env" ]; then
+    mkdir -pv "$HOME/.gnupg"
+    touch "$HOME/.gnupg/gpg-agent.env"
 fi
 
 if [[ $EUID -eq 0 ]]; then
