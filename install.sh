@@ -4,7 +4,7 @@ condition_for_install=1
 if [[ \
     -f $(which git 2>/dev/null) && \
     -f $(which zsh 2>/dev/null) && \
-    -f $(which python 2>/dev/null) && \
+    -f $(which python 2>/dev/null) \
     ]]; then
 
     condition_for_install=0
