@@ -109,6 +109,8 @@ function get-debian-package-updates { apt-get --just-print upgrade 2>&1 | perl -
 alias set-zsh-highlighting-full='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)'
 alias set-zsh-highlighting-default='ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)'
 alias set-zsh-highlighting-off='ZSH_HIGHLIGHT_HIGHLIGHTERS=()'
+alias set-terminal-powersave-off='setterm -blank 0 -powersave off'
+alias set-terminal-powersave-on='setterm -blank 60 -powersave on'
 alias set-megaraid-alarm-enabled='megacli -AdpSetProp AlarmEnbl'
 alias set-megaraid-alarm-disabled='megacli -AdpSetProp AlarmDsbl'
 alias set-megaraid-alarm-silent='megacli -AdpSetProp AlarmSilence'
