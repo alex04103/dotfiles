@@ -116,8 +116,8 @@ alias set-terminal-powersave-on='setterm -blank 60 -powersave on'
 alias set-megaraid-alarm-enabled='megacli -AdpSetProp AlarmEnbl'
 alias set-megaraid-alarm-disabled='megacli -AdpSetProp AlarmDsbl'
 alias set-megaraid-alarm-silent='megacli -AdpSetProp AlarmSilence'
-function add-iptables-allow-out-http_s { iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "$1"; }
-function remove-iptables-allow-out-http_s { iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "$1"; }
+function add-iptables-allow-out-http_s { iptables -A OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
+function remove-iptables-allow-out-http_s { iptables -D OUTPUT -p TCP --match multiport --dports 80,443 -d "$1" -j ACCEPT -m comment --comment "Temporary: $1"; }
 alias update-gentoo='echo "do a \"emerge --sync\"?"; ask_yn_y_callback() { emerge --sync; }; ask_yn_n_callback() { echo ""; }; ask_yn; emerge -avDuN world'
 alias update-archlinux-pacman='pacman -Syu'
 alias update-archlinux-yaourt='yaourt -Syu'
