@@ -128,6 +128,8 @@ alias update-debian='echo "do a \"apt-get update\"?"; ask_yn_y_callback() { apt-
 function git-reset { currentDir="$PWD"; for i in $*; do echo -e "\033[0;36m$i\033[0;0m"; cd "$i"; git reset --hard master; cd "$currentDir"; done; };
 alias fix-antigen_and_homesick_vim='git-reset $HOME/.antigen/repos/*; rm /usr/local/bin/tmux-mem-cpu-load; antigen-cleanup; git-reset $HOME/.homesick/repos/*; git-reset $HOME/.vim/bundle/*; antigen-update; homeshick pull; homeshick refresh; for i in $HOME/.vim/bundle/*; do cd "$i"; git pull; done; wait; cd $HOME; exec zsh'
 alias update-zshrc='echo "This will reset all changes you may made to files which are symlinks at your home directory, to check this your own: \"# cd ~/.homesick/repos/dotfiles/ && git status\"\nDo you want preced anyway?"; ask_yn_y_callback() { fix-antigen_and_homesick_vim; }; ask_yn_n_callback() { echo -n ""; }; ask_yn'
+alias test-mail-sendmail='echo "Subject: test" | sendmail -v '
+alias test-mail-mutti='mutt -s "test" '
 function apache2-reload { apache2ctl -t && { service apache2 reload && { sleep .1; } || { service apache2 status; } } }
 function apache2-restart { apache2ctl -t && { service apache2 restart && { sleep .1; } || { service apache2 status; } } }
 
